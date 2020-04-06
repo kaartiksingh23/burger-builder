@@ -1,9 +1,13 @@
 import React, { Component } from "react";
-import Person from "../Components/Persons/Person/Person";
+import classes from './App.css';
+// import Person from "../Components/Persons/Person/Person";
 // import "./App.css";
-import classes from './App.css'
+
 // import Radium, { StyleRoot} from 'radium';
 // import ErrorBoundary from '../ErrorBoundary/ErrorBoundary'
+
+import Persons from '../Components/Persons/Persons';
+import Cockpit from '../Components/Cockpit/Cockpit';
 
 // Class Component
 class App extends Component {
@@ -48,68 +52,26 @@ class App extends Component {
    
 
     let persons = null;
-    let btnClass = [classes.Button]
+   
 
     if (this.state.showPersons) {
 
       persons = (
         <div>
-          {// dynamic way
-          this.state.persons.map((person, index) => {
-            return (
-              <Person
-                key={person.id}
-                name={person.name}
-                age={person.age}
-                click={() => {
-                  this.deletePersonHandler(index);
-                }}
-                changed={(event)=>this.nameChangedHandler(event,person.id)}
-              />
-            );
-          })}
-
-          {/* Hard Coded Way:
-           <Person
-            name={this.state.persons[0].name}
-            age={this.state.persons[0].age}
-          />
-          <Person
-            name={this.state.persons[1].name}
-            age={this.state.persons[1].age}
-            // using bind here
-            click={this.switchNameHandler.bind(this,'Maximillian')} // you can also pass functions as props
-            changed={this.nameChangedHandler}
-          >
-            My Hobbies: Racing
-          </Person> */}
+          <Persons clicked={this.deletePersonHandler} persons={this.state.persons} changed={this.nameChangedHandler}></Persons>
         </div>
       );
-
-      btnClass.push(classes.Red);
     }
-    //let classes = ['red','bold'].join(' '); //converts array of string to "red bold"
-    const assignedClasses = [];
-    if(this.state.persons.length<=2){
-      assignedClasses.push(classes.red);
-    }
-    if(this.state.persons.length<=1){
-      assignedClasses.push(classes.bold);
-    }
-
-    
 
     return (
       
+
         <div className={classes.App}>
-          <h1>Hi, Im a React App</h1>
-          {/* other than arrow function you can use bind  */}
-          <p className={assignedClasses.join(' ')}>This is really working</p>
-          <button className= {btnClass.join(' ')} onClick={this.togglePersonsHandler}>
-            Toggle Person
-          </button>
+          <Cockpit showPersons={this.state.showPersons} persons={this.state.persons} click={this.togglePersonsHandler}></Cockpit>
           {persons}
         </div>
+
+        
       
     );
 
